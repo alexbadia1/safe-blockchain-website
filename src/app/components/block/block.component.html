@@ -1,0 +1,18 @@
+<div class="bg-white p-2 rounded text-gray-600 text-sm flex flex-wrap justify-between">
+    <ul class="my-2 md:w-1/2 w-full">
+        <li><strong>Institution</strong>: {{block.institution_name}}</li>
+        <li><strong>Degree</strong>: {{block.degree_name}}</li>
+        <li><strong>Dates</strong>: {{block.date_range}}</li>
+        <li><strong>Description</strong>: {{block.description}}</li>
+    </ul>
+    <div class="my-2 mx-2">
+        <img class="rounded w-28 h-auto" src="http://35.172.191.14/images/cert.png" alt="certified">
+    </div>
+    <div class="my-2">
+        <form method="POST" action="educationcreate.html" class="inline">
+            <input type="hidden" name="_token" value="SlPAvQo10bjzpQr74qN9t493qvdNvRq3cZgqrt66">
+            <input type="hidden" name="_method" value="DELETE"> <button type="submit"
+                class="btn text-red-500 ml-2">Delete</button>
+        </form>
+    </div>
+</div>

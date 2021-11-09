@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { FormService } from '../services/form.service';
 
 export enum CreateState {
-  FAILED = 'FAILED',
+  FAILED = 'FAILURE',
   SUCCESS = "SUCCESS",
   IN_PROGRESS = "IN_PROGRESS",
   NOT_STARTED = "NOT_STARTED"
@@ -25,6 +25,25 @@ export class CreateHTTPResponse {
   public timestamp: string = ""
   public userId: string = ""
 } // httpResponse
+
+export interface Block {
+  certificate_category: string;
+  certificate_token: string;
+  certificate_url: string;
+  date_range: string;
+  degree_name: string;
+  description: string;
+  hash: string;
+  index: string;
+  institution_name: string;
+  previousHash: string;
+  timestamp: string;
+  userId: string;
+} // Block
+
+export interface BlockChain {
+  blocks: Array<Block>;
+} // BlockChain
 
 @Component({
   selector: 'app-create',
@@ -59,7 +78,7 @@ export class CreateComponent implements OnInit {
     // upload: ""
     // _token: ""
     let jsonData = {
-      "userId": "2",
+      "userId": "1",
       "certificate_token": form.value.certificate,
       "certificate_url": form.value.upload,
       "certificate_category": form.value.c_cat,
@@ -71,10 +90,11 @@ export class CreateComponent implements OnInit {
 
     // Send to API
     this.formService.formState = CreateState.IN_PROGRESS;
-    this.http.post<CreateHTTPResponse>("https://safe-demo-api.herokuapp.com", JSON.stringify(jsonData)).subscribe(result => {
+    this.http.post<CreateHTTPResponse>("https://safe-demo-api.herokuapp.com/create", JSON.stringify(jsonData)).subscribe(result => {
+      // Makes the success message display on the home screen
       this.formService.formState = CreateState.SUCCESS;
 
-      ////// Response Data
+      ////// Parse Response Data
       // certificate_category: "Education"
       // certificate_token: "123456789987654321"
       // certificate_url: ""
@@ -101,12 +121,15 @@ export class CreateComponent implements OnInit {
       this.createResponse.timestamp = result.timestamp;
       this.createResponse.userId = result.userId;
 
-      // this.router.navigate(['/home']);
+      // Go ack to home screen
+      this.router.navigate(['']);
     },
       error => {
+        // Makes the failed message display on the home screen
         this.formService.formState = CreateState.FAILED;
-        this.router.navigate(['/home']);
+
+        // Go back to home screen
+        this.router.navigate(['']);
       });
   } // create
-
 } // CreateComponent

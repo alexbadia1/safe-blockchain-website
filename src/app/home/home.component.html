@@ -3,29 +3,59 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-
     <meta name="csrf-token" content="u1vuBUXT69Ok2Bju3tdWuiEWNZBPLr2uaK8LdD1T">
     <title>Tokened.life</title>
     <meta name="description" content="">
     <meta name="keywords" content="">
 
-
     <link rel="stylesheet" href="http://35.172.191.14/css/app.css?_m=1630996409" media="all">
     <script src="http://35.172.191.14/js/app.js?_m=1630996409" defer></script>
-
 
 </head>
 
 <body>
     <div id="app">
         <div class="relative max-w-6xl mx-auto px-2 sm:px-6 lg:px-8 py-10">
+            <!-- Hideen Form State Message -->
+            <div *ngIf="formState == 'SUCCESS'" class="bg-green-200 border-green-500 border-l-4 mb-6 p-2" role="alert">
+                <div style="display: flex; justify-content: space-between;">
+                    <div style="margin-top: auto; margin-bottom: auto;">
+                        <p><strong>SUCCESS</strong>: New Credential Added!</p>
+                    </div>
+                    <div style="margin-top: auto; margin-bottom: auto;">
+                        <button mat-icon-button class="example-icon favorite-icon"
+                            aria-label="Example icon-button with heart icon" (click)="resetFormState()"
+                            style="color: #228B22;">
+                            <mat-icon>done</mat-icon>
+                        </button>
+                    </div>
+                </div>
+            </div>
 
+            <div *ngIf="formState == 'FAILURE'" class="bg-red-200 border-red-500 border-l-4 mb-6 p-2" role="alert">
+                <div style="display: flex; justify-content: space-between; align-content: center;">
+                    <div style="margin-top: auto; margin-bottom: auto;">
+                        <p><strong>FAILURE</strong>: Could Not Add New Credential!</p>
+                    </div>
+                    <div style="margin-top: auto; margin-bottom: auto;">
+                        <button mat-icon-button class="example-icon favorite-icon"
+                            aria-label="Example icon-button with heart icon" (click)="resetFormState()"
+                            style="color: red;">
+                            <mat-icon>clear</mat-icon>
+                        </button>
+                    </div>
+                </div>
+            </div>
 
-
+            <!-- Profile -->
             <div class="rounded-xl shadow-md p-4 mb-4 flex flex-wrap">
+
+                <!-- Profile Image -->
                 <div class="my-1">
                     <img class="rounded w-56 h-auto mr-6" src="headshot image.png" alt="image">
                 </div>
+
+                <!-- Profile Actions -->
                 <div class="mt-2 flex-grow">
                     <div>
                         <div class="mt-2 text-sm text-gray-600">
@@ -40,24 +70,29 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
 
         <div class="bg-gray-50 my-6 p-6 w-full">
-            <div class="bg-gray-50 my-6 p-6 w-full">
-                <div class="font-semibold mb-4 text-lg">Education <a href="educationcreate.html"
-                        class="underline sm:ml-6 text-sm inline-block">Add new</a></div>
-                <div>
 
+            <!-- List view header -->
+            <div class="bg-gray-50 my-6 p-6 w-full">
+
+                <!-- Add new block -->
+                <div class="font-semibold mb-4 text-lg">Credentials
+                    <a class="underline sm:ml-6 text-sm inline-block" (click)="onBtnAddNew()"
+                        style="cursor: pointer;">Add new</a>
                 </div>
-                <div class="font-semibold mb-4 text-lg">Education Hash <input type="button" id='script'
-                        name="scriptbutton" value=" Hash " onclick="exec('BLockchainDemo.py');"></div>
-                <div>
-                </div>
+
+                <!-- Has block -->
+                <!-- <div class="font-semibold mb-4 text-lg">Education Hash <input type="button" id='script'
+                        name="scriptbutton" value=" Hash " onclick="exec('BLockchainDemo.py');">
+                </div> -->
+
             </div>
 
-
+            <!-- List view of all blocks -->
+            <app-block *ngFor="let block of blocks" [block]="block"></app-block>
         </div>
     </div>
 </body>
