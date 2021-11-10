@@ -14,6 +14,16 @@
 </head>
 
 <body>
+    <mat-toolbar>
+        <mat-toolbar-row>
+            <span class="side-spacer"></span>
+            <span><strong>Tokened.life</strong></span>
+            <span class="mid-spacer"></span>
+            <a mat-flat-button href="https://www.google.com/" target="_blank">Contact</a>
+            <a mat-flat-button href="https://www.google.com/" target="_blank">Search</a>
+            <span class="side-spacer"></span>
+        </mat-toolbar-row>
+    </mat-toolbar>
     <div id="app">
         <div class="relative max-w-6xl mx-auto px-2 sm:px-6 lg:px-8 py-10">
             <!-- Hideen Form State Message -->
@@ -52,7 +62,8 @@
 
                 <!-- Profile Image -->
                 <div class="my-1">
-                    <img class="rounded w-56 h-auto mr-6" src="headshot image.png" alt="image">
+                    <img class="rounded w-56 h-auto mr-6" src="https://safe-demo-api.herokuapp.com/images?name=bobby"
+                        alt="image">
                 </div>
 
                 <!-- Profile Actions -->
@@ -76,7 +87,7 @@
         <div class="bg-gray-50 my-6 p-6 w-full">
 
             <!-- List view header -->
-            <div class="bg-gray-50 my-6 p-6 w-full">
+            <div class="bg-gray-50 my-6 p-4 w-full">
 
                 <!-- Add new block -->
                 <div class="font-semibold mb-4 text-lg">Credentials
