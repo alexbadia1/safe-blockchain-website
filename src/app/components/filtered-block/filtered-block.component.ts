@@ -1,7 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Subject } from 'rxjs';
-import { Block } from 'src/app/create/create.component';
+import { Router } from '@angular/router';
+import { Block, CreateState } from 'src/app/create/create.component';
+import { FormService } from 'src/app/services/form.service';
 import { RawBlockListViewService } from 'src/app/services/raw-block-list-view.service';
 
 @Component({
@@ -27,12 +28,12 @@ export class FilteredBlockComponent implements OnInit {
     createOriginHash: ""
   } // Block
 
-  private deletedBlocks: Array<Block> = [];
-
   @Output() reloadListView: EventEmitter<Block> = new EventEmitter<Block>();
 
   constructor(
+    private router: Router,
     private http: HttpClient,
+    private formService: FormService,
     private rawBlockListViewService: RawBlockListViewService
   ) { } // Constructor
 
@@ -67,4 +68,15 @@ export class FilteredBlockComponent implements OnInit {
         console.log(e);
       });
   } // onBtnDeleteClick
+
+  onBtnUpdateClick (blockToUpdate: Block) {
+    // Reset form success/failure banner
+    this.formService.formState = CreateState.NOT_STARTED;
+    
+    // Fill form with current block's data
+    this.formService.initialBlock = blockToUpdate;
+
+    // Go to the form
+    this.router.navigate(['create']);
+  } // onBtnUpdateClick
 } // FilteredBlockComponent

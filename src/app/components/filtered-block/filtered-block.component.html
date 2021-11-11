@@ -1,22 +1,23 @@
 <div class="bg-transparent p-2 rounded text-gray-600 text-sm flex flex-wrap justify-between">
-    <ul class="my-2 md:w-1/2 w-full" style="word-wrap: break-word;"> 
-        <li><strong>Category</strong>: {{block.certificate_category}}</li>
-        <li><strong>Institution</strong>: {{block.institution_name}}</li>
-        <li><strong>Degree</strong>: {{block.degree_name}}</li>
-        <li><strong>Dates</strong>: {{block.date_range}}</li>
-        <li><strong>Description</strong>: {{block.description}}</li>
-        <li><strong>Block Index</strong>: {{block.index}}</li>
-        <li><strong>Added Timestamp</strong>: {{block.timestamp}}</li>
-        <li><strong>Hash</strong>: {{block.hash}}</li>
-        <li><strong>Previous Hash</strong>: {{block.previousHash}}</li>
-    </ul>
-    <div class="my-2 mx-2 center_vertical">
-        <img class="rounded w-28 h-auto" src="https://safe-demo-api.herokuapp.com/images?name=certified"
-            alt="certified">
-    </div>
-    <div class="my-2 center_vertical">
-        <div class="my-2 center_vertical">
-            <button class="btn text-red-500 ml-2 inline" (click)="onBtnDeleteClick(block)">Delete</button>
+    <div fxLayout="row">
+        <ul class="center_vertical" style="word-wrap: break-word; width: 100%;">
+            <li><br></li>
+            <li><br></li>
+            <li><strong>Category</strong>: {{block.certificate_category}}</li>
+            <li><strong>Institution</strong>: {{block.institution_name}}</li>
+            <li><strong>Degree</strong>: {{block.degree_name}}</li>
+            <li><strong>Dates</strong>: {{block.date_range}}</li>
+            <li><strong>Description</strong>: {{block.description}}</li>
+            <li><br></li>
+            <li><br></li>
+        </ul>
+        <div class="center_vertical">
+            <img class="certified_image" src="https://safe-demo-api.herokuapp.com/images?name=certified"
+                alt="certified">
+        </div>
+        <div class="center_vertical">
+            <a mat-flat-button style="color: blue;" (click)="onBtnUpdateClick(block)">Update</a>
+            <a mat-flat-button style="color: red;" (click)="onBtnDeleteClick(block)">Delete</a>
         </div>
     </div>
 </div>

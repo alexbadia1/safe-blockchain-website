@@ -23,7 +23,7 @@
             <div class="font-semibold text-2xl text-gray-700">Add new education for Robert Kolodziej</div>
 
             <div class="rounded-xl shadow-md p-4 my-4">
-                <form form #createForm="ngForm" (ngSubmit)="create(createForm)">
+                <form form #createForm="ngForm" (ngSubmit)="initialFormData == null ? create(createForm) : update(createForm)" ngNativeValidate>
                     <input type="hidden" value="1" name="contact_id" ngModel>
                     <input type="hidden" name="_token" value="EN49vByQn7QXwmeiF76Z0Sv1CvUwfFYQrmrJROyV" ngModel>
                     <div class="grid grid-cols-1 gap-6">
@@ -32,9 +32,9 @@
                         <legend class="text-base font-medium text-gray-900">Certification</legend>
                         <label class="block">
                             <span class="text-gray-700">Enter Certificate URL or Token</span>
-                            <input type="text" name="certificate" value=""
+                            <input type="text" name="certificate"
                                 class=" mt-1 block w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0"
-                                placeholder="Certificate" ngModel>
+                                placeholder="Certificate" ngModel="{{initialFormData?.certificate_token}}">
                         </label>
                         <div>
 
@@ -52,7 +52,8 @@
                                         <label for="upload"
                                             class="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
                                             <span>Upload a file</span>
-                                            <input id="upload" name="upload" type="file" class="sr-only"ngModel>
+                                            <input id="upload" name="upload" type="file" class="sr-only"
+                                                ngModel="{{initialFormData?.certificate_url}}">
                                         </label>
                                         <p class="pl-1">PNG, JPG up to 10MB</p>
                                     </div>
@@ -60,15 +61,19 @@
                             </div>
                         </div>
 
-                        <div class="grid md:grid-cols-4 gap-6 mb-6">
+                        <div class="grid md:grid-cols-2 gap-6 mb-6">
                             <fieldset>
                                 <div>
-                                    <legend class="text-base font-medium text-gray-900">Certificate category</legend>
+                                    <legend class="text-base font-medium text-gray-900">
+                                        <span class="text-gray-700">Certificate Category <span
+                                                style="color: red;">*</span></span>
+                                    </legend>
                                 </div>
                                 <div class="mt-4 space-y-4">
                                     <div class="flex items-center">
                                         <input id="c_cat1" name="c_cat" type="radio" value="Education"
-                                            class="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300" ngModel>
+                                            class="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300" required
+                                            ngModel="{{initialFormData?.certificate_category}}">
                                         <label for="c_cat1"
                                             class="ml-3 block text-sm font-medium text-gray-700">Education</label>
                                     </div>
@@ -76,7 +81,8 @@
                                 <div class="mt-4 space-y-4">
                                     <div class="flex items-center">
                                         <input id="c_cat2" name="c_cat" type="radio" value="Employment"
-                                            class="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300" ngModel>
+                                            class="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300"
+                                            ngModel="{{initialFormData?.certificate_category}}">
                                         <label for="c_cat2"
                                             class="ml-3 block text-sm font-medium text-gray-700">Employment</label>
                                     </div>
@@ -84,7 +90,8 @@
                                 <div class="mt-4 space-y-4">
                                     <div class="flex items-center">
                                         <input id="c_cat3" name="c_cat" type="radio" value="Trade Certification"
-                                            class="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300" ngModel>
+                                            class="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300"
+                                            ngModel="{{initialFormData?.certificate_category}}">
                                         <label for="c_cat3" class="ml-3 block text-sm font-medium text-gray-700">Trade
                                             Certification</label>
                                     </div>
@@ -92,7 +99,8 @@
                                 <div class="mt-4 space-y-4">
                                     <div class="flex items-center">
                                         <input id="c_cat4" name="c_cat" type="radio" value="Other"
-                                            class="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300" ngModel>
+                                            class="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300"
+                                            ngModel="{{initialFormData?.certificate_category}}">
                                         <label for="c_cat4"
                                             class="ml-3 block text-sm font-medium text-gray-700">Other</label>
                                     </div>
@@ -102,7 +110,9 @@
 
                             <fieldset>
                                 <div>
-                                    <legend class="text-base font-medium text-gray-900">Certificate attributes</legend>
+                                    <legend class="text-base font-medium text-gray-900">
+                                        <span class="text-gray-700">Certificate attributes</span>
+                                    </legend>
                                 </div>
                                 <div class="mt-4 space-y-4">
                                     <div class="flex items-center">
@@ -179,33 +189,33 @@
 
 
                         <label class="block">
-                            <span class="text-gray-700">Institution name *</span>
-                            <input type="text" name="institution_name" value=""
+                            <span class="text-gray-700">Issuing Organization <span style="color: red;">*</span></span>
+                            <input type="text" name="institution_name"
                                 class=" mt-1 block w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0"
-                                placeholder="Institution name" required ngModel>
+                                placeholder="Institution name" required ngModel="{{initialFormData?.institution_name}}">
                         </label>
 
 
                         <label class="block">
-                            <span class="text-gray-700">Degree name *</span>
+                            <span class="text-gray-700">Name <span style="color: red;">*</span></span>
                             <input type="text" name="degree_name" value=""
                                 class=" mt-1 block w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0"
-                                placeholder="Degree name" required ngModel>
+                                placeholder="Degree name" required ngModel="{{initialFormData?.degree_name}}">
                         </label>
 
 
                         <label class="block">
-                            <span class="text-gray-700">Dates</span>
+                            <span class="text-gray-700">Issue Date <span style="color: red;">*</span></span>
                             <input type="text" name="dates" value=""
                                 class=" mt-1 block w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0"
-                                placeholder="Date range" ngModel>
+                                placeholder="Date range" required ngModel="{{initialFormData?.date_range}}">
                         </label>
 
                         <label class="block">
                             <span class="text-gray-700">Description</span>
                             <textarea name="description"
                                 class="mt-1 block w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0"
-                                rows="3" ngModel></textarea>
+                                rows="3" ngModel="{{initialFormData?.description}}"></textarea>
                         </label>
 
                         <button id="submit" type="submit" class="btn btn-primary md:m-auto md:w-1/2"> Add </button>
@@ -215,43 +225,4 @@
 
         </div>
     </div>
-
-    <script>
-        // $(document).ready(function () {
-        //     $("#submit").click((event) => {
-        //         event.preventDefault();
-
-        //         ////// 
-        //         // 0: {name: 'contact_id', value: '1'}
-        //         // 1: {name: '_token', value: 'EN49vByQn7QXwmeiF76Z0Sv1CvUwfFYQrmrJROyV'}
-        //         // 2: {name: 'certificate', value: ''}
-        //         // 3: {name: 'institution_name', value: 'asd'}
-        //         // 4: {name: 'degree_name', value: 'asd'}
-        //         // 5: {name: 'dates', value: 'asd'}
-        //         // 6: {name: 'description', value: 'asd'}
-        //         let formData = $('form').serializeArray();
-
-        //         // Convert to JSON
-        //         let jsonData = {
-        //             "userId": "2",
-        //             "certificate_token": formData.certificate_token,
-        //             "certificate_url": formData.certificate_url,
-        //             "certificate_category": formData.certificate_category,
-        //             "institution_name": formData.institution_name,
-        //             "degree_name": formData.degree_name,
-        //             "date_range": `${formData.date_range}`,
-        //             "description": formData.description
-        //         };
-
-        //         // Send data to API
-        //         $.post(
-        //             "https://safe-demo-api.herokuapp.com/create",
-        //             JSON.stringify(jsonData),
-        //             function (data, status) {
-        //                 alert("Data: " + data + "\nStatus: " + status);
-        //             }
-        //         );
-        //     });
-        // });
-    </script>
 </body>

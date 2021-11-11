@@ -14,7 +14,6 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private http: HttpClient,
     private formService: FormService,
   ) { } // constructor
 
@@ -25,7 +24,13 @@ export class HomeComponent implements OnInit {
   } // ngOnInit
 
   public onBtnAddNew() {
+    // Reset form success/failure banner
     this.resetFormState();
+    
+    // Use an empty form
+    this.formService.initialBlock = null;
+
+    // Go to the form
     this.router.navigate(['create']);
   } // onBtnAddNew
 

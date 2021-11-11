@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 
+export const USER_ID = "1";
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',

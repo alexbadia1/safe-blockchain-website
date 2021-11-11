@@ -1,8 +1,11 @@
 <div class="bg-transparent p-2 rounded text-gray-600 text-sm flex flex-wrap justify-between">
-    <ul class="my-2 md:w-1/2 w-full" style="word-wrap: break-word;">
+    <ul class="center_vertical" style="word-wrap: break-word; width: 80%; overflow-wrap: break-word;">
         <li><strong>Block Index</strong>: {{block.index}}</li>
         <li><strong>Block Type</strong>: {{block.blockType}}</li>
         <li><strong>Hash</strong>: {{block.hash}}</li>
+        <li> <strong>Previous Hash</strong>: {{block.previousHash}}</li>
+        <li><strong>Create Origin Hash</strong>: {{block.createOriginHash}}</li>
+        <li><strong>Added Timestamp</strong>: {{block.timestamp}}</li>
         <li><strong>User ID</strong>: {{block.userId}}</li>
         <li><strong>Institution</strong>: {{block.institution_name}}</li>
         <li><strong>Degree</strong>: {{block.degree_name}}</li>
@@ -11,11 +14,8 @@
         <li><strong>Category</strong>: {{block.certificate_category}}</li>
         <li><strong>Certificate URL</strong>: {{block.certificate_url}}</li>
         <li><strong>Certificate Token</strong>: {{block.certificate_token}}</li>
-        <li><strong>Added Timestamp</strong>: {{block.timestamp}}</li>
-        <li><strong>Previous Hash</strong>: {{block.previousHash}}</li>
-        <li><strong>Create Origin Hash</strong>: {{block.createOriginHash}}</li>
     </ul>
-    <div class="bg-blue my-2 center_vertical">
-        <button type="submit" class="btn text-white-500 ml-2 inline" style="margin-right: 45px;" (click)="onBtnMineClicked(block)">Mine</button>
+    <div class="center_vertical center_hroizantal" style="display: inline-block;">
+        <a mat-flat-button style="color:burlywood;" (click)="onBtnMineClicked(block)">Mine</a>
     </div>
 </div>

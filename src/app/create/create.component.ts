@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { FormService } from '../services/form.service';
+import { USER_ID } from '../app.component';
 
 export enum CreateState {
   FAILED = 'FAILURE',
@@ -56,7 +57,8 @@ export interface BlockChain {
 })
 export class CreateComponent implements OnInit {
   // Form data to pass to home page.
-  createResponse: CreateHTTPResponse = new CreateHTTPResponse();
+  public createResponse: CreateHTTPResponse = new CreateHTTPResponse();
+  public initialFormData: Block | null = null;
 
   constructor(
     private router: Router,
@@ -67,6 +69,10 @@ export class CreateComponent implements OnInit {
   ngOnInit(): void {
     // Reset all bindings and variables
     this.formService.formState = CreateState.NOT_STARTED;
+
+    // Initialize form with data if any
+    this.initialFormData = this.formService.initialBlock;
+
     this.createResponse = new CreateHTTPResponse();
   } // ngOnInit
 
@@ -82,7 +88,7 @@ export class CreateComponent implements OnInit {
     // upload: ""
     // _token: ""
     let jsonData = {
-      "userId": "1",
+      "userId": USER_ID,
       "certificate_token": form.value.certificate,
       "certificate_url": form.value.upload,
       "certificate_category": form.value.c_cat,
@@ -136,4 +142,51 @@ export class CreateComponent implements OnInit {
         this.router.navigate(['']);
       });
   } // create
+
+  public update(formData: NgForm) {
+    ////// Form Data
+    // c_cat: ""
+    // certificate: "zcc"
+    // contact_id: ""
+    // dates: "zxczxc"
+    // degree_name: "zxczxc"
+    // description: "zxczxc"
+    // institution_name: "zxczxc"
+    // upload: ""
+    // _token: ""
+    let jsonData = {
+      "userId": USER_ID,
+      "certificate_token": formData.value.certificate,
+      "certificate_url": formData.value.upload,
+      "certificate_category": formData.value.c_cat,
+      "institution_name": formData.value.institution_name,
+      "degree_name": formData.value.degree_name,
+      "date_range": `${formData.value.dates}`,
+      "description": formData.value.description,
+      "index": parseInt(this.initialFormData?.index!),
+      "timestamp": parseInt(this.initialFormData?.timestamp!),
+      "previousHash": this.initialFormData?.previousHash,
+      "hash": this.initialFormData?.hash,
+      "blockType": this.initialFormData?.blockType,
+      "createOriginHash": this.initialFormData?.createOriginHash
+    };
+
+    console.log(jsonData);
+
+    this.http.put('https://safe-demo-api.herokuapp.com/update', jsonData).subscribe(
+      (s) => {
+        // Makes the failed message display on the home screen
+        this.formService.formState = CreateState.SUCCESS;
+
+        // Go back to home screen
+        this.router.navigate(['']);
+      },
+      (e) => {
+        // Makes the failed message display on the home screen
+        this.formService.formState = CreateState.FAILED;
+
+        // Go back to home screen
+        this.router.navigate(['']);
+      });
+  } // update
 } // CreateComponent

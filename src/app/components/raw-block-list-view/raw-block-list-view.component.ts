@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
+import { USER_ID } from 'src/app/app.component';
 import { Block } from 'src/app/create/create.component';
 import { RawBlockListViewService } from 'src/app/services/raw-block-list-view.service';
 
@@ -24,7 +25,7 @@ export class RawBlockListViewComponent implements OnInit {
       });
 
     // Fetch Raw Blockchain on load
-    this.http.get("https://safe-demo-api.herokuapp.com/chain", { params: { userId: "1", view: "raw" }, observe: 'body', responseType: 'json' }).subscribe(
+    this.http.get("https://safe-demo-api.herokuapp.com/chain", { params: { userId: USER_ID, view: "raw" }, observe: 'body', responseType: 'json' }).subscribe(
       (res) => {
         let jsonString: string = JSON.stringify(res);
         let jsonObj = JSON.parse(jsonString);
