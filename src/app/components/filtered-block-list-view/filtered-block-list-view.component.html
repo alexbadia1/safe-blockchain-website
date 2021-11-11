@@ -1,0 +1,33 @@
+<div fxLayout="row">
+    <app-filtered-block *ngFor="let block of blocks" [block]="block" (reloadListView)="onReloadListView($event)">
+    </app-filtered-block>
+</div>
+<div *ngIf="blocks.length == 0" class="bg-white p-2 rounded text-gray-600 text-sm flex flex-wrap justify-between">
+    <ul class="my-2 md:w-1/2 w-full">
+        <li><br></li>
+        <li><br></li>
+        <li><br></li>
+        <li><br></li>
+        <li><br></li>
+        <li><br></li>
+        <li><br></li>
+        <li><br></li>
+        <li><br></li>
+        <li><br></li>
+        <li><br></li>
+        <li><br></li>
+        <li><strong>No Credentials :(</strong></li>
+        <li><br></li>
+        <li><br></li>
+        <li><br></li>
+        <li><br></li>
+        <li><br></li>
+        <li><br></li>
+        <li><br></li>
+        <li><br></li>
+        <li><br></li>
+        <li><br></li>
+        <li><br></li>
+        <li><br></li>
+    </ul>
+</div>

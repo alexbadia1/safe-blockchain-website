@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BlockComponent } from './block.component';
+import { RawBlockListViewComponent } from './raw-block-list-view.component';
 
-describe('BlockComponent', () => {
-  let component: BlockComponent;
-  let fixture: ComponentFixture<BlockComponent>;
+describe('RawBlockListViewComponent', () => {
+  let component: RawBlockListViewComponent;
+  let fixture: ComponentFixture<RawBlockListViewComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ BlockComponent ]
+      declarations: [ RawBlockListViewComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(BlockComponent);
+    fixture = TestBed.createComponent(RawBlockListViewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

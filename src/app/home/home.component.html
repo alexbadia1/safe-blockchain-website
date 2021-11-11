@@ -99,8 +99,15 @@
 
             </div>
 
-            <!-- List view of all blocks -->
-            <app-block *ngFor="let block of blocks" [block]="block"></app-block>
+            <!-- List view of all blocks, I know this is kinda jarring, but this isn't a web development UI/UX class -->
+            <mat-tab-group>
+                <mat-tab label="Filtered">
+                    <app-filtered-block-list-view></app-filtered-block-list-view>
+                </mat-tab>
+                <mat-tab label="Raw">
+                    <app-raw-block-list-view></app-raw-block-list-view>
+                </mat-tab>
+            </mat-tab-group>
         </div>
     </div>
 </body>

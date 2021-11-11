@@ -13,18 +13,20 @@ export enum CreateState {
 
 export class CreateHTTPResponse {
   public certificate_category: string = "";
-  public certificate_token: string = ""
-  public certificate_url: string = ""
-  public date_range: string = ""
-  public degree_name: string = ""
-  public description: string = ""
-  public hash: string = ""
-  public index: string = ""
-  public institution_name: string = ""
-  public previousHash: string = ""
-  public timestamp: string = ""
-  public userId: string = ""
-} // httpResponse
+  public certificate_token: string = "";
+  public certificate_url: string = "";
+  public date_range: string = "";
+  public degree_name: string = "";
+  public description: string = "";
+  public hash: string = "";
+  public index: string = "";
+  public institution_name: string = "";
+  public previousHash: string = "";
+  public timestamp: string = "";
+  public userId: string = "";
+  public blockType: string = "";
+  public createOriginHash: string = "";
+} // CreateHTTPResponse
 
 export interface Block {
   certificate_category: string;
@@ -39,6 +41,8 @@ export interface Block {
   previousHash: string;
   timestamp: string;
   userId: string;
+  blockType: string
+  createOriginHash: string
 } // Block
 
 export interface BlockChain {
@@ -85,7 +89,7 @@ export class CreateComponent implements OnInit {
       "institution_name": form.value.institution_name,
       "degree_name": form.value.degree_name,
       "date_range": `${form.value.dates}`,
-      "description": form.value.description
+      "description": form.value.description,
     };
 
     // Send to API
