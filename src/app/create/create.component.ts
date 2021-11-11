@@ -171,8 +171,6 @@ export class CreateComponent implements OnInit {
       "createOriginHash": this.initialFormData?.createOriginHash
     };
 
-    console.log(jsonData);
-
     this.http.put('https://safe-demo-api.herokuapp.com/update', jsonData).subscribe(
       (s) => {
         // Makes the failed message display on the home screen
@@ -189,4 +187,12 @@ export class CreateComponent implements OnInit {
         this.router.navigate(['']);
       });
   } // update
+
+  public onBtnCancel() {
+    // Makes the failed message display on the home screen
+    this.formService.formState = CreateState.NOT_STARTED;
+
+    // Go back to home screen
+    this.router.navigate(['']);
+  } // onBtnCancel
 } // CreateComponent
