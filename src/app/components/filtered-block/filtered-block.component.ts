@@ -1,6 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Subject } from 'rxjs';
 import { Block } from 'src/app/create/create.component';
+import { RawBlockListViewService } from 'src/app/services/raw-block-list-view.service';
 
 @Component({
   selector: 'app-filtered-block',
@@ -25,10 +27,13 @@ export class FilteredBlockComponent implements OnInit {
     createOriginHash: ""
   } // Block
 
+  private deletedBlocks: Array<Block> = [];
+
   @Output() reloadListView: EventEmitter<Block> = new EventEmitter<Block>();
 
   constructor(
     private http: HttpClient,
+    private rawBlockListViewService: RawBlockListViewService
   ) { } // Constructor
 
   ngOnInit(): void { } // ngOnInit
@@ -43,7 +48,18 @@ export class FilteredBlockComponent implements OnInit {
 
     this.http.delete('https://safe-demo-api.herokuapp.com/delete', options).subscribe(
       (s) => {
-        // Block successfully deleted!, remove it from the list-view!
+        // There should only be one JSON object returned, according to the custom API.
+        // This is a "hack" and should be fixed, but I don't know how to parse JSON correctly.
+        try {
+          // Update raw list view
+          this.rawBlockListViewService.newRawBlock(<Block>JSON.parse(JSON.stringify(s)));
+        } // try
+        catch (error) {
+          console.log(`Failed to parse delete response JSON!`);
+          console.log(Error);
+        } // catch
+
+        // Update filtered list view
         this.reloadListView.emit(block);
       },
       (e) => {

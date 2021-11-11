@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Block } from 'src/app/create/create.component';
+import { RawBlockListViewService } from 'src/app/services/raw-block-list-view.service';
 
 @Component({
   selector: 'app-raw-block-list-view',
@@ -10,14 +11,20 @@ import { Block } from 'src/app/create/create.component';
 })
 export class RawBlockListViewComponent implements OnInit {
   public blocks: Array<Block> = [];
-  
+
   constructor(
     private http: HttpClient,
+    private rawBlockListViewService: RawBlockListViewService
   ) { } // constructor
 
   ngOnInit(): void {
+    this.rawBlockListViewService.onNewRawBlock$.subscribe(
+      (newRawBlock) => {
+        this.blocks.push(newRawBlock);
+      });
+
     // Fetch Raw Blockchain on load
-    this.http.get("https://safe-demo-api.herokuapp.com/chain", { params: { userId: "1", view: "raw"}, observe: 'body', responseType: 'json' }).subscribe(
+    this.http.get("https://safe-demo-api.herokuapp.com/chain", { params: { userId: "1", view: "raw" }, observe: 'body', responseType: 'json' }).subscribe(
       (res) => {
         let jsonString: string = JSON.stringify(res);
         let jsonObj = JSON.parse(jsonString);
@@ -31,7 +38,7 @@ export class RawBlockListViewComponent implements OnInit {
           let block: Block | undefined | null = undefined;
           do {
             block = <Block>jsonObj[i++];
-            
+
             if (block != undefined && block != null) {
               this.blocks.push(block);
             } // if
@@ -45,8 +52,4 @@ export class RawBlockListViewComponent implements OnInit {
         this.blocks = [];
       });
   } // ngOnInit
-
-  onReloadListView() {
-
-  } // onReloadListView
 } // RawBlockListViewComponent
