@@ -1,7 +1,6 @@
-
 # Safe Demo Website
 
-[A barebones website demo-ing blockchain for education/certifications/employment history](https://alexbadia1.github.io/AxiOS-Compiler/#/)!
+[A barebones website demo-ing blockchain for education/certifications/employment history](https://alexbadia1.github.io/safe-blockchain-website/)!
 
   * Front-End (this website) is built with [Angular](https://angular.io/guide/setup-local): https://alexbadia1.github.io/safe-blockchain-website/
   * Back-End (Blockchain API) is built with [Go](https://golang.org/doc/install) and [Heroku](https://www.heroku.com): https://safe-demo-api.herokuapp.com/
