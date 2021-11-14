@@ -20,10 +20,12 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { PeerListViewComponent } from './security/components/peer-list-view/peer-list-view.component';
 import { BlockComponent } from './security/components/block/block.component';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { PeersComponent } from './security/components/peers/peers.component';
 import { SecurityDemoButtonComponent } from './components/buttons/security-demo-button/security-demo-button.component';
 import { HomeButtonComponent } from './components/buttons/home-button/home-button.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -52,7 +54,9 @@ import { HomeButtonComponent } from './components/buttons/home-button/home-butto
     MatToolbarModule,
     MatTabsModule,
     FlexLayoutModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatFormFieldModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,11 +1,13 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { Block } from 'src/app/create/create.component';
 import { PeerListViewServiceService } from 'src/app/services/peer-list-view-service.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-peers',
   templateUrl: './peers.component.html',
-  styleUrls: ['./peers.component.scss']
+  styleUrls: ['./peers.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class PeersComponent implements OnInit {
   public peerA: string = "Peer A";
@@ -14,8 +16,9 @@ export class PeersComponent implements OnInit {
   private userBlockchain: Array<Block> = [];
 
   constructor(
+    private _snackBar: MatSnackBar,
     private peerListViewService: PeerListViewServiceService
-  ) { 
+  ) {
     // Get blockchain from service
     this.userBlockchain = this.peerListViewService.rawBlockchain;
 
@@ -43,6 +46,13 @@ export class PeersComponent implements OnInit {
 
     this.peerListViewService.peers.set(peer, tmpBlockchain);
   } // loadRealDataSet
+  
+  /**
+   * Simple voting algorithm that only looks at the last block...
+   */
+  public onBtnVoteClicked() {
+    this._snackBar.open(`${this.peerListViewService.consensus()}`, "Close", {panelClass: ['success-snackbar']});
+  } // onBtnVoteClicked
 
   private loadDummyDataSet(peer: string) {
     let blockchain: Array<Block> = [];

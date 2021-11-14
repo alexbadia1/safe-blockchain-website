@@ -1,12 +1,14 @@
-<mat-toolbar>
+<mat-toolbar style="position: sticky;">
     <mat-toolbar-row>
         <span class="side-spacer"></span>
         <span><strong>Tokened.life</strong></span>
         <span class="mid-spacer"></span>
+        <a mat-flat-button (click)="onBtnVoteClicked()" style="color: goldenrod;">VOTE</a>
+        <span class="mid-spacer"></span>
         <app-home-button></app-home-button>
         <app-security-demo-button></app-security-demo-button>
-        <a mat-flat-button >Contact</a>
-        <a mat-flat-button >Search</a>
+        <a mat-flat-button>Contact</a>
+        <a mat-flat-button>Search</a>
         <span class="side-spacer"></span>
     </mat-toolbar-row>
 </mat-toolbar>

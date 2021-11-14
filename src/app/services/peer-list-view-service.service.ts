@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Block } from '../create/create.component';
 import * as CryptoJS from 'crypto-js';
 import { Subject } from 'rxjs';
+import { MINE_ZEROS } from '../app.component';
 
 @Injectable({
   providedIn: 'root'
@@ -67,4 +68,66 @@ export class PeerListViewServiceService {
       prev = b;
     } // for
   } // hashBlockchain
+
+  public validChain(peerKey: string) {
+    // Check validity of blockchain
+    for (let block of this.peers.get(peerKey)!) {
+      if (block.hash.substring(0, 5) != MINE_ZEROS) {
+        return false;
+      } // if
+    } // for
+
+    return true;
+  } // validChain
+
+  public consensus(): string {
+    // Check for valid chains first
+    // Check all the hash values
+    for (let key of this.peers.keys()) {
+      if (!this.validChain(key)) {
+        return "Could not vote with invalid chains.";
+      } // if
+    } // for
+
+    // Frequency Table
+    let freq: Map<string, number> = new Map();
+
+    // Check all the hash values
+    for (let key of this.peers.keys()) {
+      let block = this.peers.get(key)![this.peers.get(key)!.length - 1];
+
+      // Put in hash table if it doesn't exist already
+      // and count all frequency/occurences
+      if (freq.get(block.hash) == undefined) {
+        freq.set(block.hash, 1);
+      } else {
+        let newCount: number = freq.get(block.hash)! + 1;
+        freq.set(block.hash, newCount);
+      } // if-else
+    } // for
+
+    // Find Hash with max consensus
+    let max: number = 0;
+    let maxHash: string = "";
+    for (let fKey of freq.keys()) {
+      if (freq.get(fKey)! > max) {
+        max = freq.get(fKey)!
+        maxHash = fKey;
+      } // if
+    } // for
+    console.log(freq);
+
+    // Find Peer with the hash
+    for (let peer of this.peers.keys()) {
+      for (let block of this.peers.get(peer)!) {
+        // Put in hash table if it doesn't exist already
+        // and count all frequency/occurences
+        if (block.hash == maxHash) {
+          return `Consensus: ${peer} (Votes: ${max})`;
+        } // if
+      } // for
+    } // for
+
+    return "";
+  } // vote
 } // PeerListViewServiceService
