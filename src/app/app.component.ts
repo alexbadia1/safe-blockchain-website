@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 
 export const USER_ID = "1";
+export const MINE_ZEROS = "00000";
 
 @Component({
   selector: 'app-root',

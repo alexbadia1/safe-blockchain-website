@@ -1,0 +1,25 @@
+<div style="margin-left: 40px; margin-right: 40px;">
+    <div fxLayout="row" style="width: 100%; overflow-x: scroll;">
+        <ng-container *ngFor="let bIndex of blockIndexes" style="width: 100%;">
+            <div *ngIf="bIndex.index > 1" style="margin-top: auto; margin-bottom: auto; width: 100%;">
+                <div style="width: 100%; text-align: center;">
+                    <mat-icon *ngIf="bIndex.isValid" [ngStyle]="bIndex.isValid ? {'color': 'green'} : {'color': 'red'}">
+                        lock</mat-icon>
+                    <mat-icon *ngIf="!bIndex.isValid"
+                        [ngStyle]="bIndex.isValid ? {'color': 'green'} : {'color': 'red'}">lock_open</mat-icon>
+                </div>
+                <hr style="height:1px; width:100%; border:none;color:#333;"
+                    [ngStyle]="bIndex.isValid ? {'background-color': 'green'} : {'background-color': 'red'}" />
+            </div>
+            <!-- Ignore Genesis Block -->
+            <app-block *ngIf="bIndex.index != 0" [canMine] = "bIndex.canMine" [index]="bIndex.index" [peerKey]="peerKey" [isValid]="bIndex.isValid" (formChange)="onFormChange($event)">
+            </app-block>
+        </ng-container>
+    </div>
+    <div *ngIf="blockIndexes.length == 0"
+        class="bg-white p-2 rounded text-gray-600 text-sm flex flex-wrap justify-between">
+        <ul class="my-2 md:w-1/2 w-full">
+            <li><strong>No Credentials :(</strong></li>
+        </ul>
+    </div>
+</div>

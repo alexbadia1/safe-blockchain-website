@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { USER_ID } from 'src/app/app.component';
 import { Block } from 'src/app/create/create.component';
+import { PeerListViewServiceService } from 'src/app/services/peer-list-view-service.service';
 import { RawBlockListViewService } from 'src/app/services/raw-block-list-view.service';
 
 @Component({
@@ -15,7 +16,8 @@ export class RawBlockListViewComponent implements OnInit {
 
   constructor(
     private http: HttpClient,
-    private rawBlockListViewService: RawBlockListViewService
+    private rawBlockListViewService: RawBlockListViewService,
+    private peerListViewService: PeerListViewServiceService
   ) { } // constructor
 
   ngOnInit(): void {
@@ -46,6 +48,9 @@ export class RawBlockListViewComponent implements OnInit {
           } while (block != undefined && block != null);
         } // try
         catch (error) { } // catch
+
+        // Add to Security Demo Service
+        this.peerListViewService.rawBlockchain = this.blocks;
       },
       (error) => {
         // No blocks returned

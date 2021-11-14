@@ -21,7 +21,8 @@ export class RawBlockComponent implements OnInit {
     timestamp: "",
     userId: "",
     blockType: "",
-    createOriginHash: ""
+    createOriginHash: "",
+    nonce: ""
   } // Block
 
   @Output() onBlockMined: EventEmitter<Block> = new EventEmitter<Block>();

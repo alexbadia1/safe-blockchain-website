@@ -18,6 +18,12 @@ import { RawBlockListViewComponent } from './components/raw-block-list-view/raw-
 import { FilteredBlockListViewComponent } from './components/filtered-block-list-view/filtered-block-list-view.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { PeerListViewComponent } from './security/components/peer-list-view/peer-list-view.component';
+import { BlockComponent } from './security/components/block/block.component';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { PeersComponent } from './security/components/peers/peers.component';
+import { SecurityDemoButtonComponent } from './components/buttons/security-demo-button/security-demo-button.component';
+import { HomeButtonComponent } from './components/buttons/home-button/home-button.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +33,12 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     FilteredBlockComponent,
     RawBlockComponent,
     RawBlockListViewComponent,
-    FilteredBlockListViewComponent
+    FilteredBlockListViewComponent,
+    PeerListViewComponent,
+    BlockComponent,
+    PeersComponent,
+    SecurityDemoButtonComponent,
+    HomeButtonComponent
   ],
   imports: [
     BrowserModule,
@@ -40,7 +51,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MatIconModule,
     MatToolbarModule,
     MatTabsModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    MatProgressSpinnerModule
   ],
   providers: [],
   bootstrap: [AppComponent]

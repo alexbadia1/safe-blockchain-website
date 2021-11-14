@@ -25,7 +25,8 @@ export class FilteredBlockComponent implements OnInit {
     timestamp: "",
     userId: "",
     blockType: "",
-    createOriginHash: ""
+    createOriginHash: "",
+    nonce: "",
   } // Block
 
   @Output() reloadListView: EventEmitter<Block> = new EventEmitter<Block>();

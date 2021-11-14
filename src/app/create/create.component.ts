@@ -27,6 +27,7 @@ export class CreateHTTPResponse {
   public userId: string = "";
   public blockType: string = "";
   public createOriginHash: string = "";
+  public nonce: string = "";
 } // CreateHTTPResponse
 
 export interface Block {
@@ -42,8 +43,9 @@ export interface Block {
   previousHash: string;
   timestamp: string;
   userId: string;
-  blockType: string
-  createOriginHash: string
+  blockType: string;
+  createOriginHash: string;
+  nonce: string;
 } // Block
 
 export interface BlockChain {
@@ -59,6 +61,7 @@ export class CreateComponent implements OnInit {
   // Form data to pass to home page.
   public createResponse: CreateHTTPResponse = new CreateHTTPResponse();
   public initialFormData: Block | null = null;
+  public formState: CreateState = CreateState.NOT_STARTED;
 
   constructor(
     private router: Router,
@@ -69,6 +72,7 @@ export class CreateComponent implements OnInit {
   ngOnInit(): void {
     // Reset all bindings and variables
     this.formService.formState = CreateState.NOT_STARTED;
+    this.formState = this.formService.formState;
 
     // Initialize form with data if any
     this.initialFormData = this.formService.initialBlock;
@@ -100,9 +104,11 @@ export class CreateComponent implements OnInit {
 
     // Send to API
     this.formService.formState = CreateState.IN_PROGRESS;
+    this.formState = this.formService.formState;
     this.http.post<CreateHTTPResponse>("https://safe-demo-api.herokuapp.com/create", JSON.stringify(jsonData)).subscribe(result => {
       // Makes the success message display on the home screen
       this.formService.formState = CreateState.SUCCESS;
+      this.formState = this.formService.formState;
 
       ////// Parse Response Data
       // certificate_category: "Education"
@@ -130,6 +136,7 @@ export class CreateComponent implements OnInit {
       this.createResponse.previousHash = result.previousHash;
       this.createResponse.timestamp = result.timestamp;
       this.createResponse.userId = result.userId;
+      this.createResponse.nonce = result.nonce;
 
       // Go ack to home screen
       this.router.navigate(['']);
@@ -137,6 +144,7 @@ export class CreateComponent implements OnInit {
       error => {
         // Makes the failed message display on the home screen
         this.formService.formState = CreateState.FAILED;
+        this.formState = this.formService.formState;
 
         // Go back to home screen
         this.router.navigate(['']);

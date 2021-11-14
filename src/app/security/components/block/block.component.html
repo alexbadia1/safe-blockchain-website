@@ -1,0 +1,121 @@
+<div class="block"
+    [ngStyle]="isValid ? {'background-color': 'rgb(223, 240, 216)'} : {'background-color': 'rgb(250, 220, 220)'}" style=" margin-bottom: 8px;">
+    <form form #blockForm="ngForm">
+        <div class="flex-row-space-between">
+            <!-- Left Side -->
+            <div>
+                <div class="flex-row-space-between">
+                    <div class="label">
+                        Nonce:
+                    </div>
+                    <div>
+                        <input name="nonce" type="text" (keyup)="onFormChange(blockForm)" ngModel="{{block?.nonce}}">
+                    </div>
+                </div>
+                <div class="flex-row-space-between">
+                    <div class="label">
+                        User ID:
+                    </div>
+                    <div>
+                        <input name="userId" type="text" (keyup)="onFormChange(blockForm)" ngModel="{{block?.userId}}">
+                    </div>
+                </div>
+                <div class="flex-row-space-between">
+                    <div class="label">
+                        Token:
+                    </div>
+                    <div>
+                        <input name="certificate_token" type="text" (keyup)="onFormChange(blockForm)"
+                            ngModel="{{block?.certificate_token}}">
+                    </div>
+                </div>
+                <div class="flex-row-space-between">
+                    <div class="label">
+                        URL:
+                    </div>
+                    <div>
+                        <input name="certificate_url" type="text" (keyup)="onFormChange(blockForm)"
+                            ngModel="{{block?.certificate_url}}">
+                    </div>
+                </div>
+                <div class="flex-row-space-between">
+                    <div class="label">
+                        Category:
+                    </div>
+                    <div>
+                        <input name="certificate_category" type="text" (keyup)="onFormChange(blockForm)"
+                            ngModel="{{block?.certificate_category}}">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side -->
+            <div>
+                <div class="flex-row-space-between">
+                    <div class="label">
+                        Issuing Org:
+                    </div>
+                    <div>
+                        <input name="institution_name" type="text" (keyup)="onFormChange(blockForm)"
+                            ngModel="{{block?.institution_name}}">
+                    </div>
+                </div>
+                <div class="flex-row-space-between">
+                    <div class="label">
+                        Name:
+                    </div>
+                    <div>
+                        <input name="degree_name" type="text" (keyup)="onFormChange(blockForm)"
+                            ngModel="{{block?.degree_name}}">
+                    </div>
+                </div>
+                <div class="flex-row-space-between">
+                    <div class="label">
+                        Issue Date:
+                    </div>
+                    <div>
+                        <input name="date_range" type="text" (keyup)="onFormChange(blockForm)"
+                            ngModel="{{block?.date_range}}">
+                    </div>
+                </div>
+                <div class="flex-row-space-between">
+                    <div class="label">
+                        Description:
+                    </div>
+                    <div>
+                        <input name="description" type="text" (keyup)="onFormChange(blockForm)"
+                            ngModel="{{block?.description}}">
+                    </div>
+                </div>
+                <div class="flex-row-space-between">
+                    <div class="label">
+                        Timestamp:
+                    </div>
+                    <div>
+                        <input name="timestamp" type="text" (keyup)="onFormChange(blockForm)"
+                            ngModel="{{block?.timestamp}}">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="grid">
+            <div>
+                <div class="grid-25-75">
+                    <div><strong>Previous Hash</strong></div>
+                    <div style="word-wrap: break-word;">{{block?.previousHash}}</div>
+                </div>
+                <div class="grid-25-75">
+                    <div><strong>Hash</strong></div>
+                    <div style="word-wrap: break-word;">{{block?.hash}}</div>
+                </div>
+            </div>
+            <div class="center_vertical">
+                <div *ngIf="canMine == false">
+                    <mat-spinner [diameter]="22.5" [ngStyle]="{'color': 'royalblue'}"></mat-spinner>
+                </div>
+                <a mat-flat-button class="mine-button" *ngIf="canMine == true" [disabled]="!canMine"
+                    (click)=onMine(blockForm)>Mine</a>
+            </div>
+        </div>
+    </form>
+</div>

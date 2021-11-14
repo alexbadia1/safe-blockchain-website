@@ -1,0 +1,22 @@
+<mat-toolbar>
+    <mat-toolbar-row>
+        <span class="side-spacer"></span>
+        <span><strong>Tokened.life</strong></span>
+        <span class="mid-spacer"></span>
+        <app-home-button></app-home-button>
+        <app-security-demo-button></app-security-demo-button>
+        <a mat-flat-button >Contact</a>
+        <a mat-flat-button >Search</a>
+        <span class="side-spacer"></span>
+    </mat-toolbar-row>
+</mat-toolbar>
+
+<h2>Peer A</h2>
+<app-peer-list-view [peerKey]="peerA"></app-peer-list-view>
+<br>
+<h2>Peer B</h2>
+<app-peer-list-view [peerKey]="peerB"></app-peer-list-view>
+<br>
+<h2>Peer C</h2>
+<app-peer-list-view [peerKey]="peerC"></app-peer-list-view>
+<br>
