@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MINE_ZEROS } from 'src/app/app.component';
 import { Block } from 'src/app/create/create.component';
-import { PeerListViewServiceService } from 'src/app/services/peer-list-view-service.service';
-import { BlockchainKeyIndex } from '../block/block.component';
+import { PeerListViewServiceService, PEER_A } from 'src/app/services/peer-list-view-service.service';
+import { BlockchainKeyIndex } from '../peer-block/block.component';
 
 export interface BlockIndexAndIsValid {
   index: number,
@@ -16,7 +16,7 @@ export interface BlockIndexAndIsValid {
   styleUrls: ['./peer-list-view.component.scss']
 })
 export class PeerListViewComponent implements OnInit {
-  @Input() peerKey: string = "Peer A";
+  @Input() peerKey: string = PEER_A;
   public blockIndexes: Array<BlockIndexAndIsValid> = [];
 
   constructor(

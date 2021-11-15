@@ -6,11 +6,20 @@ import { Block } from 'src/app/create/create.component';
   providedIn: 'root'
 })
 export class FormService {
-  // If CreateState is SUCCESS or FAIL, redirect
-  // to the home page, showing a GREEN or RED banner.
+  /**
+   * Stores Form State making available to all components.
+   * 
+   * If CreateState is SUCCESS or FAIL, redirect
+   * to the home page, showing a GREEN or RED banner.
+   */
   public formState: CreateState = CreateState.NOT_STARTED;
 
-  // Form Action
+  /**
+   * Controls form action.
+   * 
+   * If null, form sends POST; if
+   * an initial block, form sends PUT.
+   */
   public initialBlock: Block | null = null;
   
   constructor() { } // constructor

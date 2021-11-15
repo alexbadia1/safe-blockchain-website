@@ -6,12 +6,17 @@ import { Block } from '../create/create.component';
   providedIn: 'root'
 })
 export class RawBlockListViewService {
+  /**
+   * Subject allows Raw List View Component to react
+   * to any updates or deletes to the raw blockchain.
+   */
   public onNewRawBlock$: Subject<Block> = new Subject<Block>();
 
   constructor() { } // constructor
 
   /**
-   * Adds a new block to the raw list view
+   * Notifies the List View Component with new block.
+   * @param newBlock Block, to be added to Raw List View Component.
    */
   public newRawBlock(newBlock: Block) {
     this.onNewRawBlock$.next(newBlock);

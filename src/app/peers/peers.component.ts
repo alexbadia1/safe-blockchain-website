@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { Block } from 'src/app/create/create.component';
-import { PeerListViewServiceService } from 'src/app/services/peer-list-view-service.service';
+import { PeerListViewServiceService, PEER_A, PEER_B, PEER_C } from 'src/app/services/peer-list-view-service.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
@@ -10,9 +10,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   encapsulation: ViewEncapsulation.None,
 })
 export class PeersComponent implements OnInit {
-  public peerA: string = "Peer A";
-  public peerB: string = "Peer B";
-  public peerC: string = "Peer C";
+  public peerA: string = PEER_A;
+  public peerB: string = PEER_B;
+  public peerC: string = PEER_C;
   private userBlockchain: Array<Block> = [];
 
   constructor(

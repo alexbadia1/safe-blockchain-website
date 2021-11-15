@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CreateComponent } from './create/create.component';
 import { HomeComponent } from './home/home.component';
-import { PeersComponent } from './security/components/peers/peers.component';
+import { PeersComponent } from './peers/peers.component';
 
 const routes: Routes = [
   { path: "", component: HomeComponent }, 

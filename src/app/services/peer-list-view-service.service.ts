@@ -4,16 +4,36 @@ import * as CryptoJS from 'crypto-js';
 import { Subject } from 'rxjs';
 import { MINE_ZEROS } from '../app.component';
 
+export const PEER_A = "Peer A";
+export const PEER_B = "Peer B";
+export const PEER_C = "Peer C";
+
 @Injectable({
   providedIn: 'root'
 })
 export class PeerListViewServiceService {
+  /**
+   * Main user's blockchain passed from the Home Component,
+   * which serves as a template for peers in the Decurity Demo.
+   */
   public rawBlockchain: Array<Block> = [];
+
+  /**
+   * Stores the state of the Mine button. 
+   * 
+   * When clicked, all buttons are temporarly deactivated. 
+   * The user can only mine one block at a a time in an effort
+   * to avoid event queue scheduling and/or concurrency problems.
+   */
   public canMine$: Subject<boolean> = new Subject();
+
+  /**
+   * Map to store all demo peer blockchains.
+   */
   public peers: Map<string, Array<Block>> = new Map([
-    ["Peer A", []],
-    ["Peer B", []],
-    ["Peer C", []],
+    [PEER_A, []],
+    [PEER_B, []],
+    [PEER_C, []],
   ]);
 
   constructor() { } // constructor
@@ -22,7 +42,7 @@ export class PeerListViewServiceService {
    * Recalculates the hashes for all the blocks in the chain starting
    * from the specified start index [start] to the end of the blockchain.
    * 
-   * Start should be >= 1, as to not re-hash the genesis block.
+   * Start should be >= 1, as not to re-hash the genesis block.
    * 
    * @param peerKey string
    * @param start number
@@ -49,6 +69,8 @@ export class PeerListViewServiceService {
       // Get prev hash before hashing
       b.previousHash = prev.hash;
 
+      // SHA 256 Hash in this order excactly, as this is how it is
+      // done server side too! See server side documentation for the hash.
       let msg: string = ""
       msg += `${b.certificate_category}`.trim();
       msg += `${b.certificate_token}`.trim();
@@ -62,15 +84,19 @@ export class PeerListViewServiceService {
       msg += `${b.timestamp}`.trim();
       msg += `${b.userId}`.trim();
       msg += `${b.nonce}`.trim();
-
-      // Store sha256 Hash
       b.hash = CryptoJS.SHA256(msg).toString();
       prev = b;
     } // for
   } // hashBlockchain
 
+  /**
+   * Validates that all blocks on the chain are mined.
+   * That is, each block's hash starts with five 0's.
+   * 
+   * @param peerKey string, the peer blockchain.
+   * @returns boolean, valid chain or not.
+   */
   public validChain(peerKey: string) {
-    // Check validity of blockchain
     for (let block of this.peers.get(peerKey)!) {
       if (block.hash.substring(0, 5) != MINE_ZEROS) {
         return false;
@@ -80,24 +106,30 @@ export class PeerListViewServiceService {
     return true;
   } // validChain
 
+  /**
+   * Forms a consensus between all peers, by checking
+   * which last blocks hash appears in most of the peers.
+   * 
+   * @returns string describing the consensus.
+   */
   public consensus(): string {
-    // Check for valid chains first
-    // Check all the hash values
+    // All chains must be valid to form a consensus
     for (let key of this.peers.keys()) {
       if (!this.validChain(key)) {
-        return "Could not vote with invalid chains.";
+        return "All chains must be valid to form a consensus!";
       } // if
     } // for
 
     // Frequency Table
     let freq: Map<string, number> = new Map();
 
-    // Check all the hash values
+    // For each chain...
     for (let key of this.peers.keys()) {
+
+      // Get last block...
       let block = this.peers.get(key)![this.peers.get(key)!.length - 1];
 
-      // Put in hash table if it doesn't exist already
-      // and count all frequency/occurences
+      // Keep track in frequency table
       if (freq.get(block.hash) == undefined) {
         freq.set(block.hash, 1);
       } else {
@@ -106,7 +138,7 @@ export class PeerListViewServiceService {
       } // if-else
     } // for
 
-    // Find Hash with max consensus
+    // Find Hash with max consensus from frequency table
     let max: number = 0;
     let maxHash: string = "";
     for (let fKey of freq.keys()) {
@@ -115,19 +147,19 @@ export class PeerListViewServiceService {
         maxHash = fKey;
       } // if
     } // for
-    console.log(freq);
 
-    // Find Peer with the hash
+    // For each chain...
+    let correctPeers: Array<string> = [];
     for (let peer of this.peers.keys()) {
-      for (let block of this.peers.get(peer)!) {
-        // Put in hash table if it doesn't exist already
-        // and count all frequency/occurences
-        if (block.hash == maxHash) {
-          return `Consensus: ${peer} (Votes: ${max})`;
-        } // if
-      } // for
-    } // for
 
-    return "";
-  } // vote
+      // Get last block...
+      let block = this.peers.get(peer)![this.peers.get(peer)!.length - 1];
+
+      // Thix blockchain is part of the consensus.
+      if (block.hash == maxHash) {
+        correctPeers.push(peer);
+      } // if
+    } // for
+    return `Consensus: ${correctPeers} (Votes: ${max})`;
+  } // consensus
 } // PeerListViewServiceService
