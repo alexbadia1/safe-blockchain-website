@@ -1,0 +1,11 @@
+.success-snackbar {
+    white-space: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    background-color:white;
+    color: black;
+
+    .mat-simple-snackbar-action {
+        color: blue !important;
+    }
+}

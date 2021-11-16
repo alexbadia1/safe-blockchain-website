@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { FormService } from '../services/form.service';
 import { USER_ID } from '../app.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 export enum CreateState {
   FAILED = 'FAILURE',
@@ -66,6 +67,7 @@ export class CreateComponent implements OnInit {
   constructor(
     private router: Router,
     private http: HttpClient,
+    private _snackBar: MatSnackBar,
     private formService: FormService
   ) { } // constructor
 
@@ -190,6 +192,7 @@ export class CreateComponent implements OnInit {
       (e) => {
         // Makes the failed message display on the home screen
         this.formService.formState = CreateState.FAILED;
+        this._snackBar.open(`Form submission failed!`, "Close", {panelClass: ['success-snackbar']});
 
         // Go back to home screen
         this.router.navigate(['']);

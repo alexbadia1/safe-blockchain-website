@@ -13,6 +13,7 @@ export class PeersComponent implements OnInit {
   public peerA: string = PEER_A;
   public peerB: string = PEER_B;
   public peerC: string = PEER_C;
+  private useDummyData: boolean = false;
   private userBlockchain: Array<Block> = [];
 
   constructor(
@@ -27,15 +28,25 @@ export class PeersComponent implements OnInit {
       this.loadDummyDataSet(this.peerA);
       this.loadDummyDataSet(this.peerB);
       this.loadDummyDataSet(this.peerC);
+      this.useDummyData = true;
     } //  if
     else {
       this.loadRealDataSet(this.peerA);
       this.loadRealDataSet(this.peerB);
       this.loadRealDataSet(this.peerC);
+      this.useDummyData = false;
     } // else
   } // constructor
 
-  ngOnInit(): void { } // ngonInit
+  ngOnInit(): void {
+    if (this.useDummyData) {
+      this._snackBar.open(`Demo is using dummy data!`, "Close", {panelClass: ['success-snackbar']});
+    } // if
+
+    else {
+      this._snackBar.open(`Demo is using user's Blockchain!`, "Close", {panelClass: ['success-snackbar']});
+    } // else
+   } // ngonInit
 
   private loadRealDataSet(peer: string) {
     let tmpBlockchain: Array<Block> = [];
